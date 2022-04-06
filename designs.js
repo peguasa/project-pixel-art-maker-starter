@@ -1,39 +1,50 @@
 // Select color input
 // Select size input
 
-// When size is submitted by the user, call makeGrid()
 const height = document.getElementById('inputHeight');
 const width = document.getElementById('inputWidth');
-const cp = document.getElementById('colorPicker');
 const form = document.getElementById('sizePicker');
 const table = document.getElementById('pixelCanvas');
 
+
 form.addEventListener('submit', function(event){
      event.preventDefault();
-    //  table.innerHTML = '';
-     makeGrid();
+     makeGrid(height, width);
 })
 
- table.addEventListener('click', function(event){
-    if(event.target.nodeName ==='TD'){
-      event.target.style.backgroundcolor = colorPicker.value;
-    }
- });
+
+// creating the makeGrid function
 
 function makeGrid() {
         let grid = '';
     for (var i = 1; i <= height.value; i++){
         grid += "<tr>";
         for (var j = 1; j<= width.value; j++){
-            grid += "<td></td>";
-    }
-         grid += "</tr>";
+            grid += "<td class='block'></td>";
         }
+         grid += "</tr>";
+    }
       table.innerHTML = grid;
-// Your code goes here!
-}
-// function addColor(){
-//    const cp = document.getElementById('colorPicker').value;  
-//    return cp;
-// }
 
+
+}
+
+
+// adding color to the grid
+
+function addColor() {
+    const cp = document.getElementById('colorPicker');
+    document.getElementById('pixelCanvas').addEventListener('click', function(evt) {
+        if(evt.target.classList.contains('block')) {
+            const event = evt.target
+        
+            if(event.hasAttribute('style')) {
+                event.removeAttribute('style');
+
+            }else{
+                event.style.backgroundColor = cp.value;
+            }
+        }
+    });
+}
+addColor();
